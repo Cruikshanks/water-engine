@@ -1,23 +1,19 @@
 {
   "name": "water-engine",
   "version": "1.0.0",
-  "main": "src/index.js",
+  "description": "",
+  "homepage": "https://github.com/Cruikshanks/water-engine",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Beckyrose200/water-engine.git"
+    "url": "git+https://github.com/Cruikshanks/water-engine.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Beckyrose200/water-engine/issues"
-  },
-  "homepage": "https://github.com/Beckyrose200/water-engine#readme",
-  "description": "",
+  "author": "Water service team",
+  "license": "OGL-UK-3.0",
   "dependencies": {
-    "@hapi/hapi": "^21.4.0"
+    "@hapi/hapi": "^21.4.8"
   }
 }
