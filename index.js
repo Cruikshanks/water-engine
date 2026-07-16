@@ -1,5 +1,5 @@
-const viewLicence = require('./src/view-licence.service.js')
+const ViewLicenceService = require('./src/services/licences/view-licence.service.js')
 
 module.exports = {
-  viewLicence
+  ViewLicenceService
 }
