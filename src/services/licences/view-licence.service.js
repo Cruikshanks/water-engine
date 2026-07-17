@@ -1,6 +1,4 @@
-'use strict'
-
-function go (licenceId) {
+export default function viewLicenceService (licenceId) {
   return {
     licenceId,
     holder: "John Doe",
@@ -8,8 +6,4 @@ function go (licenceId) {
     status: "Active",
     expiryDate: "2026-12-31"
   }
-}
-
-module.exports = {
-  go
 }
