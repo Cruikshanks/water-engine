@@ -4,8 +4,7 @@
   "description": "",
   "homepage": "https://github.com/Cruikshanks/water-engine",
   "exports": {
-    ".": "./index.js",
-    "./services": "./src/services/index.js"
+    "./services/*": "./src/services/*"
   },
   "type": "module",
   "scripts": {
