@@ -4,6 +4,7 @@
   "description": "",
   "homepage": "https://github.com/Cruikshanks/water-engine",
   "exports": {
+    "./dal/*": "./src/dal/*",
     "./services/*": "./src/services/*"
   },
   "type": "module",
