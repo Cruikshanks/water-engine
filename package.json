@@ -8,6 +8,7 @@
     "./prettierrc": "./prettier.config.js",
     "./dal/*": "./src/dal/*",
     "./plugins/*": "./src/plugins/*",
+    "./routes/*": "./src/routes/*",
     "./services/*": "./src/services/*"
   },
   "type": "module",
