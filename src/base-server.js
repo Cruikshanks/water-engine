@@ -1,3 +1,4 @@
+import Cookie from '@hapi/cookie'
 import Hapi from '@hapi/hapi'
 import Inert from '@hapi/inert'
 
@@ -32,6 +33,7 @@ async function _registerPlugins(server) {
   // any existing plugin registration double-check you haven't broken anything!
   await server.register(StopPlugin)
   await server.register(Inert)
+  await server.register(Cookie)
   await server.register(YarPlugin)
   await server.register(HapiPinoPlugin)
   await server.register(PayloadCleanerPlugin)
