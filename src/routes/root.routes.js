@@ -14,6 +14,16 @@ export default [
   },
   {
     method: 'GET',
+    path: '/robots.txt',
+    options: {
+      handler: {
+        file: 'src/public/static/robots.txt'
+      },
+      auth: false
+    }
+  },
+  {
+    method: 'GET',
     path: '/status',
     options: {
       handler: index,
