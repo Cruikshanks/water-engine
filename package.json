@@ -6,6 +6,7 @@
   "exports": {
     "./eslint.config.js": "./eslint.config.js",
     "./prettierrc": "./prettier.config.js",
+    "./base-server": "./src/base-server.js",
     "./dal/*": "./src/dal/*",
     "./plugins/*": "./src/plugins/*",
     "./routes/*": "./src/routes/*",
