@@ -5,6 +5,7 @@ import Inert from '@hapi/inert'
 import HapiPinoPlugin from './plugins/hapi-pino.plugin.js'
 import KeepYarAlivePlugin from './plugins/keep-yar-alive.plugin.js'
 import PayloadCleanerPlugin from './plugins/payload-cleaner.plugin.js'
+import RouterPlugin from './plugins/router.plugin.js'
 import StopPlugin from './plugins/stop.plugin.js'
 import ViewsPlugin from './plugins/views.plugin.js'
 import YarPlugin from './plugins/yar.plugin.js'
@@ -40,4 +41,5 @@ async function _registerPlugins(server, config) {
   await server.register(PayloadCleanerPlugin)
   await server.register(ViewsPlugin(config.vision))
   await server.register(KeepYarAlivePlugin)
+  await server.register(RouterPlugin)
 }
