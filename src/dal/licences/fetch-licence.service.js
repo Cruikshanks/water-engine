@@ -12,6 +12,7 @@
 export default function fetchLicenceService(licenceId) {
   return {
     licenceId,
+    licenceRef: 'AT/TE/ST/01/01',
     holder: 'John Doe',
     type: 'Water Abstraction',
     status: 'Active',
