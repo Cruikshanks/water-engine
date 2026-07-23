@@ -67,20 +67,32 @@
 
 import Yar from '@hapi/yar'
 
-import AuthenticationConfig from '../../config/authentication.config.js'
-
 const FIFTEEN_MINUTES_IN_MILLISECONDS = 15 * 60 * 1000
 
-export default {
-  plugin: Yar,
-  options: {
-    cookieOptions: {
-      password: AuthenticationConfig.password,
-      // After fifteen minutes of inactivity our session will expire. Any filters or other data saved to the session
-      // will disappear. We keep it alive by 'touching' it on every request, which resets the TTL. See the
-      // `SessionPlugin` for more details.
-      ttl: FIFTEEN_MINUTES_IN_MILLISECONDS
-    },
-    name: AuthenticationConfig.sessionName
+/**
+ * Factory function to build the Yar plugin
+ *
+ * This differs from our other plugins that return an object because need to pass in config to be applied to the object
+ * we're returning. This is because the apps need to tell us what password and name they want their session to use.
+ *
+ * @param {object} config - Object containing `password` and `sessionName` properties to configure Yar
+ *
+ * @returns {object} The Yar plugin object
+ */
+export default function YarPlugin(config) {
+  const { password, sessionName } = config
+
+  return {
+    plugin: Yar,
+    options: {
+      cookieOptions: {
+        password,
+        // After fifteen minutes of inactivity our session will expire. Any filters or other data saved to the session
+        // will disappear. We keep it alive by 'touching' it on every request, which resets the TTL. See the
+        // `SessionPlugin` for more details.
+        ttl: FIFTEEN_MINUTES_IN_MILLISECONDS
+      },
+      name: sessionName
+    }
   }
 }

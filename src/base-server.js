@@ -36,7 +36,7 @@ async function _registerPlugins(server, config) {
   await server.register(StopPlugin)
   await server.register(Inert)
   await server.register(Cookie)
-  await server.register(YarPlugin)
+  await server.register(YarPlugin(config.yar))
   await server.register(HapiPinoPlugin)
   await server.register(PayloadCleanerPlugin)
   await server.register(ViewsPlugin(config.vision))
