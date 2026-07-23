@@ -25,14 +25,17 @@
   "author": "Water service team",
   "license": "OGL-UK-3.0",
   "dependencies": {
+    "@airbrake/node": "^2.1.9",
     "@hapi/cookie": "^12.0.1",
     "@hapi/hapi": "^21.4.8",
     "@hapi/inert": "^7.1.2",
     "@hapi/vision": "^7.0.3",
     "@hapi/yar": "^11.0.3",
     "eslint-plugin-prettier": "^5.5.6",
+    "got": "^15.1.0",
     "govuk-frontend": "^4.10.1",
     "hapi-pino": "^13.0.0",
+    "hpagent": "^1.2.0",
     "nunjucks": "^3.2.4",
     "sanitizer": "^0.1.3"
   },

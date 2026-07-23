@@ -39,6 +39,12 @@ process.on('unhandledRejection', (err) => {
 
 function _serverConfig() {
   return {
+    airbrake: {
+      host: 'http://my-errbit-instance.com',
+      projectKey: '2699f466-e68c-4c3e-a9eb-b94b159b1c0e',
+      projectId: 1,
+      environment: 'local'
+    },
     hapi: {
       port: 3000,
       // The router section controls how incoming request URIs are matched against the routing table. In our AWS
@@ -48,6 +54,14 @@ function _serverConfig() {
         isCaseSensitive: false,
         stripTrailingSlash: true
       }
+    },
+    server: {
+      domains: {
+        external: 'https://localhost:3002',
+        internal: 'https://localhost:3001'
+      },
+      environment: 'test',
+      httpProxy: null
     },
     vision: {
       // Only enable caching of templates if we are running in production

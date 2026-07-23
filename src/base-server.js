@@ -2,6 +2,7 @@ import Cookie from '@hapi/cookie'
 import Hapi from '@hapi/hapi'
 import Inert from '@hapi/inert'
 
+import AirbrakePlugin from './plugins/airbrake.plugin.js'
 import HapiPinoPlugin from './plugins/hapi-pino.plugin.js'
 import KeepYarAlivePlugin from './plugins/keep-yar-alive.plugin.js'
 import PayloadCleanerPlugin from './plugins/payload-cleaner.plugin.js'
@@ -38,6 +39,7 @@ async function _registerPlugins(server, config) {
   await server.register(Cookie)
   await server.register(YarPlugin(config.yar))
   await server.register(HapiPinoPlugin)
+  await server.register(AirbrakePlugin(config))
   await server.register(PayloadCleanerPlugin)
   await server.register(ViewsPlugin(config.vision))
   await server.register(KeepYarAlivePlugin)
