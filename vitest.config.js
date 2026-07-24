@@ -40,7 +40,13 @@ export default {
           // Maximum time in milliseconds allowed for a before/after hook to complete
           hookTimeout: 10000,
           // Glob patterns that select which test files belong to this project
-          include: ['test/controllers/**/*.test.js', 'test/plugins/**/*.test.js', 'test/services/plugins/**/*.test.js'],
+          include: [
+            'test/controllers/**/*.test.js',
+            'test/lib/**/*.test.js',
+            'test/models/**/*.test.js',
+            'test/plugins/**/*.test.js',
+            'test/services/plugins/**/*.test.js'
+          ],
           // Share a single worker context across test files rather than isolating each file in its own module scope
           isolate: false,
           // Module(s) to run once per test file before importing it. Used to add polyfills and test-level setup

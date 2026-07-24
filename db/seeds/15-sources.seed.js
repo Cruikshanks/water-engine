@@ -1,0 +1,16 @@
+import SourceModel from '../../src/models/source.model.js'
+import { data as sources } from './data/sources.js'
+import { timestampForPostgres } from '../../src/lib/general.lib.js'
+
+export default async function seed() {
+  for (const source of sources) {
+    await _upsert(source)
+  }
+}
+
+async function _upsert(source) {
+  return SourceModel.query()
+    .insert({ ...source, createdAt: timestampForPostgres(), updatedAt: timestampForPostgres() })
+    .onConflict('externalId')
+    .merge(['description', 'sourceType', 'ngr', 'updatedAt'])
+}

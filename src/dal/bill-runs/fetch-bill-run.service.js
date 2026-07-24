@@ -3,6 +3,8 @@
  * @module FetchBillRunService
  */
 
+import BillRunModel from '../../models/bill-run.model.js'
+
 /**
  * Fetch the matching Bill Run
  *
@@ -11,10 +13,5 @@
  * @returns {object} the matching bill run instance
  */
 export default function fetchBillRunService(billRunId) {
-  return {
-    billRunId,
-    reference: '100456',
-    type: 'annual',
-    financialYearEnd: '2027-03-31'
-  }
+  return BillRunModel.query().findById(billRunId)
 }

@@ -1,0 +1,84 @@
+/**
+ * @module ChargeReferenceHelper
+ */
+
+import ChargeCategoryHelper from './charge-category.helper.js'
+import ChargeReferenceModel from '../../../src/models/charge-reference.model.js'
+import { generateUUID } from '../generators.js'
+
+/**
+ * Add a new charge reference
+ *
+ * If no `data` is provided, default values will be used. These are
+ *
+ * - `chargeVersionId` - [random UUID]
+ * - `source` - non-tidal
+ * - `loss` - low
+ * - `description` - Charge reference 1 - Mineral washing
+ * - `section127Agreement` - false
+ * - `scheme` - sroc
+ * - `restrictedSource` - false
+ * - `waterModel` - no model
+ * - `volume` - 200
+ * - `chargeCategoryId` - [randomly selected UUID from charge categories]
+ * - `adjustments` - { s126: null, s127: false, s130: false, charge: null, winter: false, aggregate: null }
+ * - `eiucRegion` - Anglian
+ * - `abstractionPeriodStartDay` - 1
+ * - `abstractionPeriodStartMonth` - 4
+ * - `abstractionPeriodEndDay` - 31
+ * - `abstractionPeriodEndMonth` - 3
+ *
+ * @param {object} [data] - Any data you want to use instead of the defaults used here or in the database
+ *
+ * @returns {Promise<module:ChargeReferenceModel>} The instance of the newly created record
+ */
+function add(data = {}) {
+  const insertData = defaults(data)
+
+  return ChargeReferenceModel.query()
+    .insert({ ...insertData })
+    .returning('*')
+}
+
+/**
+ * Returns the defaults used
+ *
+ * It will override or append to them any data provided. Mainly used by the `add()` method, we make it available
+ * for use in tests to avoid having to duplicate values.
+ *
+ * @param {object} [data] - Any data you want to use instead of the defaults used here or in the database
+ *
+ * @returns {object} - Returns the set defaults with the override data spread
+ */
+function defaults(data = {}) {
+  const { id: chargeCategoryId } = ChargeCategoryHelper.select()
+
+  const defaults = {
+    chargeVersionId: generateUUID(),
+    source: 'non-tidal',
+    loss: 'low',
+    description: 'Charge reference 1 - Mineral washing',
+    section127Agreement: false,
+    scheme: 'sroc',
+    restrictedSource: false,
+    waterModel: 'no model',
+    volume: 200,
+    chargeCategoryId,
+    adjustments: { s126: null, s127: false, s130: false, charge: null, winter: false, aggregate: null },
+    eiucRegion: 'Anglian',
+    abstractionPeriodStartDay: 1,
+    abstractionPeriodStartMonth: 4,
+    abstractionPeriodEndDay: 31,
+    abstractionPeriodEndMonth: 3
+  }
+
+  return {
+    ...defaults,
+    ...data
+  }
+}
+
+export default {
+  add,
+  defaults
+}
