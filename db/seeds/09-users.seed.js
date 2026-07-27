@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 
-import DatabaseConfig from '../../config/database.config.js'
-import ServerConfig from '../../config/server.config.js'
+import DatabaseConfig from '../../src/config/database.config.js'
+import ServerConfig from '../../src/config/server.config.js'
 import UserModel from '../../src/models/user.model.js'
 import { db } from '../db.js'
 import { timestampForPostgres } from '../../src/lib/general.lib.js'

@@ -7,6 +7,7 @@
     "./eslint.config.js": "./eslint.config.js",
     "./prettierrc": "./prettier.config.js",
     "./base-server": "./src/base-server.js",
+    "./config/*": "./src/config/*",
     "./dal/*": "./src/dal/*",
     "./plugins/*": "./src/plugins/*",
     "./routes/*": "./src/routes/*",

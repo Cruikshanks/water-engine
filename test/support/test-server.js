@@ -8,9 +8,9 @@ import BaseServer from '../../src/base-server.js'
  * @returns {Promise<object>} The initialised Hapi server instance
  */
 export async function init() {
-  const serverConfig = _serverConfig()
+  const viewsConfig = _viewsConfig()
 
-  const server = await BaseServer(serverConfig)
+  const server = await BaseServer(viewsConfig)
 
   await server.initialize()
 
@@ -37,44 +37,27 @@ process.on('unhandledRejection', (err) => {
   process.exit(1)
 })
 
-function _serverConfig() {
+/**
+ * The Hapi vision plugin is registered and managed by water-engine to avoid duplication. It also means we can add the
+ * govuk frontend and Nunjucks just once to the engine.
+ *
+ * But the apps need control over the views, so they can be tailored for their different needs. This means the apps need
+ * to tell the engine what config Vision should use. This essentially comes down to telling Vision, and Nunjucks where
+ * to find stuff. For that to happen we need to dynamically resolve the path to the views directory relative to this at
+ * run time.
+ *
+ * This is why the config is generated and passed through at runtime.
+ *
+ * @private
+ */
+function _viewsConfig() {
   return {
-    airbrake: {
-      host: 'http://my-errbit-instance.com',
-      projectKey: '2699f466-e68c-4c3e-a9eb-b94b159b1c0e',
-      projectId: 1,
-      environment: 'local'
-    },
-    hapi: {
-      port: 3000,
-      // The router section controls how incoming request URIs are matched against the routing table. In our AWS
-      // environments we see trailing slashes added to the end of paths so this deals with that issue. We also don't want
-      // client systems having to worry about what case they use for the endpoint when making a request.
-      router: {
-        isCaseSensitive: false,
-        stripTrailingSlash: true
-      }
-    },
-    server: {
-      domains: {
-        external: 'https://localhost:3002',
-        internal: 'https://localhost:3001'
-      },
-      environment: 'test',
-      httpProxy: null
-    },
-    vision: {
-      // Only enable caching of templates if we are running in production
-      isCached: false,
-      // the root file path used to resolve and load the templates identified when calling h.view()
-      path: 'views',
-      // The base path used as prefix for `path:`. It will dynamically resolve to the directory containing this file
-      // (…/test/support/test-server.js) so that the `path:` is relative to this file.
-      relativeTo: import.meta.dirname
-    },
-    yar: {
-      password: 'supercalifragilisticexpialidocious',
-      sessionName: 'engine-test'
-    }
+    // Only enable caching of templates if we are running in production
+    isCached: process.env.NODE_ENV === 'production',
+    // the root file path used to resolve and load the templates identified when calling h.view()
+    path: 'views',
+    // The base path used as prefix for `path:`. It will dynamically resolve to the directory containing this file
+    // (…/src/server.js) so that the `path:` is relative to this file.
+    relativeTo: import.meta.dirname
   }
 }

@@ -1,5 +1,5 @@
 import RegionModel from '../../src/models/region.model.js'
-import ServerConfig from '../../config/server.config.js'
+import ServerConfig from '../../src/config/server.config.js'
 import { db } from '../db.js'
 import { data as regions } from './data/regions.js'
 import { timestampForPostgres } from '../../src/lib/general.lib.js'

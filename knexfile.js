@@ -1,4 +1,4 @@
-import DatabaseConfig from './config/database.config.js'
+import DatabaseConfig from './src/config/database.config.js'
 
 const defaultConfig = {
   client: 'postgres',

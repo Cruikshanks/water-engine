@@ -18,6 +18,8 @@
 
 import { Notifier } from '@airbrake/node'
 
+import AirbrakeConfig from '../config/airbrake.config.js'
+import ServerConfig from '../config/server.config.js'
 import { gotWrapper } from '../lib/got-wrapper.lib.js'
 
 // The `Notifier` constructor unconditionally hooks `process.on('uncaughtException' | 'unhandledRejection' |
@@ -27,69 +29,54 @@ import { gotWrapper } from '../lib/got-wrapper.lib.js'
 // here and reuse it across every registration to avoid that leak.
 let _notifier
 
-/**
- * Factory function to build the Airbrake plugin
- *
- * This differs from our other plugins that return an object because need to pass in config to be applied to the object
- * we're returning. This is because the apps need to tell us what Errbit values to use for their Airbrake instance, plus
- * any proxy config.
- *
- * @param {object} config - Object containing Airbrake and proxy configuration
- *
- * @returns {object} The Airbrake plugin object
- */
-export default function AirbrakePlugin(config) {
-  return {
-    name: 'airbrake',
-    register: async (server, _options) => {
-      // We add an instance of the Airbrake Notifier so we can send notifications via Airbrake to Errbit manually if
-      // needed. It's main use is when passed in as a param to RequestNotifierLib in the RequestNotifierPlugin
-      if (!_notifier) {
-        _notifier = new Notifier(await _notifierArgs(config))
-      }
-
-      server.app.airbrake = _notifier
-
-      // When Hapi emits a request event with an error we capture the details and use Airbrake to send a request to our
-      // Errbit instance
-      server.events.on({ name: 'request', channels: 'error' }, (request, event, _tags) => {
-        server.app.airbrake
-          .notify({
-            error: event.error,
-            session: {
-              route: request.route.path,
-              method: request.method,
-              url: request.url.href
-            }
-          })
-          .then((notice) => {
-            if (!notice.id) {
-              server.logger.error({ message: `Airbrake notification failed: ${notice.error}`, error: notice.error })
-            }
-          })
-          .catch((error) => {
-            server.logger.error({ message: `Airbrake notification errored: ${error}`, error })
-          })
-      })
+export default {
+  name: 'airbrake',
+  register: async (server, _options) => {
+    // We add an instance of the Airbrake Notifier so we can send notifications via Airbrake to Errbit manually if
+    // needed. It's main use is when passed in as a param to RequestNotifierLib in the RequestNotifierPlugin
+    if (!_notifier) {
+      _notifier = new Notifier(await _notifierArgs())
     }
+
+    server.app.airbrake = _notifier
+
+    // When Hapi emits a request event with an error we capture the details and use Airbrake to send a request to our
+    // Errbit instance
+    server.events.on({ name: 'request', channels: 'error' }, (request, event, _tags) => {
+      server.app.airbrake
+        .notify({
+          error: event.error,
+          session: {
+            route: request.route.path,
+            method: request.method,
+            url: request.url.href
+          }
+        })
+        .then((notice) => {
+          if (!notice.id) {
+            server.logger.error({ message: `Airbrake notification failed: ${notice.error}`, error: notice.error })
+          }
+        })
+        .catch((error) => {
+          server.logger.error({ message: `Airbrake notification errored: ${error}`, error })
+        })
+    })
   }
 }
 
-async function _notifierArgs(config) {
-  const { airbrake: airbrakeConfig, server: serverConfig } = config
-
+async function _notifierArgs() {
   const args = {
-    host: airbrakeConfig.host,
-    projectId: airbrakeConfig.projectId,
-    projectKey: airbrakeConfig.projectKey,
-    environment: airbrakeConfig.environment,
+    host: AirbrakeConfig.host,
+    projectId: AirbrakeConfig.projectId,
+    projectKey: AirbrakeConfig.projectKey,
+    environment: AirbrakeConfig.environment,
     errorNotifications: true,
     performanceStats: false,
     remoteConfig: false
   }
 
-  if (serverConfig.httpProxy) {
-    args.request = await gotWrapper({ proxy: serverConfig.httpProxy })
+  if (ServerConfig.httpProxy) {
+    args.request = await gotWrapper({ proxy: ServerConfig.httpProxy })
   }
 
   return args
