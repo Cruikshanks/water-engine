@@ -19,7 +19,7 @@
     "lint": "eslint .",
     "migrate:test": "NODE_ENV=test node db/wipe.database.js && NODE_ENV=test knex migrate:latest",
     "migrate:wipe": "NODE_ENV=test node db/wipe.database.js",
-    "test": "NODE_ENV=test vitest run"
+    "test": "NODE_ENV=test TZ=UTC vitest run"
   },
   "repository": {
     "type": "git",
