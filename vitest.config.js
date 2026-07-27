@@ -8,10 +8,12 @@ export default {
       changed: !ci,
       // Files and folders to exclude from coverage measurement entirely
       exclude: [
+        'db/**',
+        'eslint-rules/**',
+        'src/config/**',
         'src/plugins/hapi-pino.plugin.js',
         'src/plugins/stop.plugin.js',
         'src/plugins/views.plugin.js',
-        'config/**',
         'test/**'
       ],
       // Use V8's built-in coverage instrumentation
