@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "homepage": "https://github.com/Cruikshanks/water-engine",
+  "bin": {
+    "water-knex": "./bin/water-knex.js"
+  },
   "exports": {
     "./eslint.config.js": "./eslint.config.js",
     "./prettierrc": "./prettier.config.js",
@@ -17,6 +20,8 @@
   "type": "module",
   "scripts": {
     "lint": "eslint .",
+    "migrate:make": "knex migrate:make --",
+    "migrate": "knex migrate:latest",
     "migrate:test": "NODE_ENV=test node db/wipe.database.js && NODE_ENV=test knex migrate:latest",
     "migrate:wipe": "NODE_ENV=test node db/wipe.database.js",
     "test": "NODE_ENV=test TZ=UTC vitest run"
