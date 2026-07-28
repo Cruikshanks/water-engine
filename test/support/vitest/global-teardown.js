@@ -3,7 +3,7 @@
  * @module GlobalTeardown
  */
 
-import * as Database from './support/database.js'
+import * as Database from '../database.js'
 
 /**
  * Closes the database connection after all tests have run

@@ -12,10 +12,12 @@
     "./base-server": "./src/base-server.js",
     "./config/*": "./src/config/*",
     "./dal/*": "./src/dal/*",
+    "./db/*": "./db/*",
     "./models/*": "./src/models/*",
     "./plugins/*": "./src/plugins/*",
     "./routes/*": "./src/routes/*",
     "./services/*": "./src/services/*",
+    "./test/*": "./test/support/*",
     "./views/*": "./views/*"
   },
   "type": "module",

@@ -26,9 +26,9 @@ export default {
     // Base directory to scan for test files. Specified to speed up test discovery
     dir: 'test',
     // Module(s) to run once before all test suites. We use it to clean and seed the database
-    globalSetup: ['test/global-setup.js'],
+    globalSetup: ['test/support/vitest/global-setup.js'],
     // Module(s) to run once after all test suites. We use it to ensure the database connection is closed
-    globalTeardown: ['test/global-teardown.js'],
+    globalTeardown: ['test/support/vitest/global-teardown.js'],
     // Each entry is a separate Vitest project, allowing different runner settings per group of tests
     projects: [
       {
@@ -52,7 +52,7 @@ export default {
           // Share a single worker context across test files rather than isolating each file in its own module scope
           isolate: false,
           // Module(s) to run once per test file before importing it. Used to add polyfills and test-level setup
-          setupFiles: ['test/setup.js'],
+          setupFiles: ['test/support/vitest/file-setup.js'],
           // Human-readable label for this project shown in the Vitest output
           name: 'parallel',
           // In CI use 2 workers (GitHub actions have 2 cores) to avoid resource contention; locally use 50%
@@ -89,7 +89,7 @@ export default {
           // Share a single worker context across test files rather than isolating each file in its own module scope
           isolate: false,
           // Module(s) to run once per test file before importing it. Used to add polyfills and test-level setup
-          setupFiles: ['test/setup.js'],
+          setupFiles: ['test/support/vitest/file-setup.js'],
           // Human-readable label for this project shown in the Vitest output
           name: 'series',
           // Force a single worker so tests run one at a time and cannot interfere with each other via the database
