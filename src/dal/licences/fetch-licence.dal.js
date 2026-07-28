@@ -1,6 +1,6 @@
 /**
  * Fetch the matching Licence
- * @module FetchLicenceService
+ * @module FetchLicenceDal
  */
 
 import LicenceModel from '../../models/licence.model.js'
@@ -12,6 +12,6 @@ import LicenceModel from '../../models/licence.model.js'
  *
  * @returns {object} the matching licence instance
  */
-export default function fetchLicenceService(licenceId) {
+export default function fetchLicenceDal(licenceId) {
   return LicenceModel.query().findById(licenceId)
 }

@@ -1,6 +1,6 @@
 /**
  * Fetch the matching Bill Run
- * @module FetchBillRunService
+ * @module FetchBillRunDal
  */
 
 import BillRunModel from '../../models/bill-run.model.js'
@@ -12,6 +12,6 @@ import BillRunModel from '../../models/bill-run.model.js'
  *
  * @returns {object} the matching bill run instance
  */
-export default function fetchBillRunService(billRunId) {
+export default function fetchBillRunDal(billRunId) {
   return BillRunModel.query().findById(billRunId)
 }
