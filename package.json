@@ -12,6 +12,7 @@
     "./base-server": "./src/base-server.js",
     "./config/*": "./src/config/*",
     "./dal/*": "./src/dal/*",
+    "./models/*": "./src/models/*",
     "./plugins/*": "./src/plugins/*",
     "./routes/*": "./src/routes/*",
     "./services/*": "./src/services/*",
