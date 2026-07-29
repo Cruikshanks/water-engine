@@ -4,7 +4,6 @@
   "description": "",
   "homepage": "https://github.com/Cruikshanks/water-engine",
   "bin": {
-    "water-jsdoc": "./bin/water-jsdoc.js",
     "water-knex": "./bin/water-knex.js"
   },
   "exports": {
@@ -23,7 +22,7 @@
   },
   "type": "module",
   "scripts": {
-    "docs": "water-jsdoc",
+    "docs": "jsdoc -c .jsdoc.json",
     "lint": "eslint .",
     "migrate:make": "knex migrate:make --",
     "migrate": "knex migrate:latest",
@@ -49,7 +48,6 @@
     "eslint-plugin-prettier": "^5.5.6",
     "got": "^15.1.0",
     "govuk-frontend": "^4.10.1",
-    "jsdoc": "^4.0.5",
     "hapi-pino": "^13.0.0",
     "hpagent": "^1.2.0",
     "knex": "^3.3.0",
@@ -66,6 +64,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import-x": "^4.17.1",
     "eslint-plugin-jsdoc": "^63.1.0",
+    "jsdoc": "^4.0.5",
     "neostandard": "^0.13.0",
     "nock": "^14.0.16",
     "pino-pretty": "^13.1.3",
