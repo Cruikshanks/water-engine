@@ -21,6 +21,7 @@
  */
 
 import { config } from 'dotenv'
+import { existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { spawnSync } from 'child_process'
 import { dirname, join } from 'node:path'
@@ -31,8 +32,15 @@ import { dirname, join } from 'node:path'
 // behaviour keeps them intact in the child.
 config()
 
+// This is part of ensuring all paths are determined absolute rather than relative. It means rather than Knex looking
+// for migrations and seeds, etc, relative from `process.cwd()`, it instead just uses the absolute path to the file.
+// This allows us to run migrations in the engine to create the test DB, as well as from the apps for their own testing,
+// and to run migrations against the main DB from them.
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const knexBin = join(__dirname, '../node_modules/.bin/knex')
+// When water-engine is npm-linked, import.meta.url resolves the symlink to the real path, so knex lives in the
+// engine's own node_modules. When installed normally or in CI, npm hoists knex to the calling app's node_modules.
+const engineKnex = join(__dirname, '../node_modules/.bin/knex')
+const knexBin = existsSync(engineKnex) ? engineKnex : join(process.cwd(), 'node_modules/.bin/knex')
 const knexfile = join(__dirname, '../knexfile.js')
 
 const args = ['--knexfile', knexfile, ...process.argv.slice(2)]
