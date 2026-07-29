@@ -10,6 +10,7 @@
 
 import Nunjucks from 'nunjucks'
 import Vision from '@hapi/vision'
+import { existsSync } from 'node:fs'
 import path from 'node:path'
 
 /**
@@ -101,14 +102,21 @@ function prepare(config, next) {
   // alongside this file. import.meta.dirname gives us the real path regardless of symlinks, so this works whether
   // water-engine is installed as a git dependency (nested under node_modules/water-engine/) or npm-linked.
   //
-  // govukFrontendPath:  …/water-engine/node_modules/govuk-frontend/
+  // govukFrontendPath: path to govuk-frontend package
+  //   - npm link: govuk-frontend lives in water-engine's own node_modules (import.meta.dirname resolves the
+  //     symlink to the real engine path, so the nested node_modules/ is found)
+  //   - git dep in CI: npm may hoist govuk-frontend to the consuming app's node_modules, so the nested path
+  //     won't exist — fall back one level up to the parent node_modules/
   //   → templates imported as e.g. "govuk/components/summary-list/macro.njk"
   //
   // waterEngineParentPath: parent directory of water-engine itself
   //   - git dep:  water-back-office/node_modules/   (contains water-engine/)
   //   - npm link: workspace parent dir              (contains water-engine/)
   //   → templates imported as e.g. "water-engine/views/macros/page-heading.njk"
-  const govukFrontendPath = path.resolve(import.meta.dirname, '../../node_modules/govuk-frontend/')
+  const engineGovuk = path.resolve(import.meta.dirname, '../../node_modules/govuk-frontend/')
+  const govukFrontendPath = existsSync(engineGovuk)
+    ? engineGovuk
+    : path.resolve(import.meta.dirname, '../../../govuk-frontend/')
   const waterEngineParentPath = path.resolve(import.meta.dirname, '../../..')
   const paths = [path.join(config.relativeTo, config.path), waterEngineParentPath, govukFrontendPath]
 
